@@ -4,6 +4,8 @@ from player import Player
 from poker import best_possible_hand, Card, Hand
 
 # A class for representing one pot or side pot
+
+
 class Pot:
     def __init__(self, players: Set[Player]) -> None:
         # The players that have contributed to this pot and can win it
@@ -46,6 +48,8 @@ class Pot:
 
 # A class to manage pots and side pots and who is in each pot and how much
 # each player has bet so far
+
+
 class PotManager:
     def __init__(self):
         # List of side pots in the game

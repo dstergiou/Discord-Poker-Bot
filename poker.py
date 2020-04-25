@@ -201,15 +201,19 @@ class Hand:
 
 # Returns the best possible 5-card hand that can be made from the five
 # community cards and a player's two hole cards
+
+
 def best_possible_hand(public: List[Card], private: Tuple[Card, Card]) -> Hand:
     return max(Hand(list(hand))
                for hand in combinations(tuple(public) + private, 5))
 
 # A class for representing a simple, randomized deck that can be drawn from
+
+
 class Deck:
     def __init__(self):
         self.cards = [Card(suit, rank) for suit in SUITS
-                                       for rank in RANK_INFO]
+                      for rank in RANK_INFO]
         random.shuffle(self.cards)
 
     def draw(self) -> Card:

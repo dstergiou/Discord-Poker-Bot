@@ -19,6 +19,8 @@ GAME_OPTIONS: Dict[str, Option] = {
 }
 
 # An enumeration that says what stage of the game we've reached
+
+
 class GameState(Enum):
     # Game hasn't started yet
     NO_GAME = 1
@@ -36,6 +38,8 @@ class GameState(Enum):
     RIVER_DEALT = 7
 
 # A class that keeps track of all the information having to do with a game
+
+
 class Game:
     def __init__(self) -> None:
         self.new_game()
@@ -189,8 +193,10 @@ class Game:
 
         # Figure out the players that need to pay the blinds
         if len(self.players) > 2:
-            small_player = self.players[(self.dealer_index + 1) % len(self.in_hand)]
-            big_player = self.players[(self.dealer_index + 2) % len(self.in_hand)]
+            small_player = self.players[(
+                self.dealer_index + 1) % len(self.in_hand)]
+            big_player = self.players[(
+                self.dealer_index + 2) % len(self.in_hand)]
             # The first player to bet pre-flop is the player to the left of the big blind
             self.turn_index = (self.dealer_index + 3) % len(self.in_hand)
             # The first player to bet post-flop is the first player to the left of the dealer
@@ -291,8 +297,10 @@ class Game:
 
         winners = self.pot.get_winners(self.shared_cards)
         for winner, winnings in sorted(winners.items(), key=lambda item: item[1]):
-            hand_name = str(best_possible_hand(self.shared_cards, winner.cards))
-            messages.append(f"{winner.name} wins ${winnings} with a {hand_name}.")
+            hand_name = str(best_possible_hand(
+                self.shared_cards, winner.cards))
+            messages.append(
+                f"{winner.name} wins ${winnings} with a {hand_name}.")
             winner.balance += winnings
 
         # Remove players that went all in and lost
@@ -302,7 +310,8 @@ class Game:
             if player.balance > 0:
                 i += 1
             else:
-                messages.append(f"{player.name} has been knocked out of the game!")
+                messages.append(
+                    f"{player.name} has been knocked out of the game!")
                 self.players.pop(i)
                 if len(self.players) == 1:
                     # There's only one player, so they win
@@ -374,7 +383,7 @@ class Game:
         return self.showdown()
 
     # Send a message to each player, telling them what their hole cards are
-    async def tell_hands(self, client: discord.Client):
+    async def tell_hands(self):
         for player in self.players:
-            await client.send_message(player.user, str(player.cards[0]) + "  "
-                                                   + str(player.cards[1]))
+            channel = await player.user.create_dm()
+            await channel.send(str(player.cards[0]) + "  " + str(player.cards[1]))

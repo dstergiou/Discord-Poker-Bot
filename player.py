@@ -4,6 +4,7 @@ import discord
 
 from poker import Card
 
+
 # A class that contains information on an individual player
 class Player:
     def __init__(self, user: discord.User) -> None:
