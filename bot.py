@@ -247,6 +247,12 @@ def chip_count(game: Game, message: discord.Message) -> List[str]:
             for player in game.players]
 
 
+def show_board(game: Game, message: discord.Message) -> List[str]:
+    if game.state in (GameState.FLOP_DEALT, GameState.TURN_DEALT, GameState.RIVER_DEALT):
+        message = " ".join(str(card) for card in game.shared_cards)
+        return [f"The board is: {message}" ]
+    return ["You can't request a board if no cards have been put on the board!"]
+
 # Handles a player going all-in, returning an error message if the player
 # cannot go all-in for some reason. Returns the list of messages for the bot
 # to say.
@@ -272,32 +278,20 @@ Command = namedtuple("Command", ["description", "action"])
 
 # The commands avaliable to the players
 commands: Dict[str, Command] = {
-    '!newgame': Command('Starts a new game, allowing players to join.',
-                        new_game),
-    '!join':    Command('Lets you join a game that is about to begin',
-                        join_game),
-    '!start':   Command('Begins a game after all players have joined',
-                        start_game),
-    '!deal':    Command('Deals the hole cards to all the players',
-                        deal_hand),
-    '!call':    Command('Matches the current bet',
-                        call_bet),
-    '!raise':   Command('Increase the size of current bet',
-                        raise_bet),
-    '!check':   Command('Bet no money',
-                        check),
-    '!fold':    Command('Discard your hand and forfeit the pot',
-                        fold_hand),
-    '!help':    Command('Show the list of commands',
-                        show_help),
-    '!options': Command('Show the list of options and their current values',
-                        show_options),
-    '!set':     Command('Set the value of an option',
-                        set_option),
-    '!count':   Command('Shows how many chips each player has left',
-                        chip_count),
-    '!all-in':  Command('Bets the entirety of your remaining chips',
-                        all_in),
+    '!newgame': Command('Starts a new game, allowing players to join.',  new_game),
+    '!join':    Command('Lets you join a game that is about to begin', join_game),
+    '!start':   Command('Begins a game after all players have joined', start_game),
+    '!deal':    Command('Deals the hole cards to all the players', deal_hand),
+    '!call':    Command('Matches the current bet', call_bet),
+    '!raise':   Command('Increase the size of current bet', raise_bet),
+    '!check':   Command('Bet no money', check),
+    '!fold':    Command('Discard your hand and forfeit the pot', fold_hand),
+    '!help':    Command('Show the list of commands', show_help),
+    '!options': Command('Show the list of options and their current values', show_options),
+    '!set':     Command('Set the value of an option', set_option),
+    '!count':   Command('Shows how many chips each player has left', chip_count),
+    '!all-in':  Command('Bets the entirety of your remaining chips', all_in),
+    '!show':    Command('Shows the current board', show_board),
 }
 
 

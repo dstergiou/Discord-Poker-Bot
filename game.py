@@ -109,7 +109,7 @@ class Game:
         messages = []
         for player in self.players:
             messages.append(f"{player.user.name} has ${player.balance}.")
-        messages.append(f"{self.dealer.user.name} is the current dealer. "
+        messages.append(f"**{self.dealer.user.name}** is the current dealer. "
                         "Message !deal to deal when you're ready.")
         return messages
 
@@ -227,7 +227,7 @@ class Game:
 
     # Returns messages telling the current player their options
     def cur_options(self) -> List[str]:
-        messages = [f"It is {self.current_player.name}'s turn. "
+        messages = [f"It is **{self.current_player.name}'s** turn. "
                     f"{self.current_player.user.name} currently has "
                     f"${self.current_player.balance}. "
                     f"The pot is currently ${self.pot.value}."]

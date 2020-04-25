@@ -5,7 +5,8 @@ from itertools import combinations
 from typing import List, Tuple
 import random
 
-SUITS = ('♠', '♥', '♦', '♣')
+# SUITS = ('♠', '♥', '♦', '♣')
+SUITS = ('<:lgspade:703622285080264865>', '♥', '♦', '<:lgclub:703622298078412832>')
 
 RankInfo = namedtuple('RankInfo', ['name', 'plural', 'value'])
 
@@ -25,6 +26,7 @@ RANK_INFO = {
     "A":  RankInfo("ace",   "aces",   12),
 }
 
+
 # An enumeration for ranking poker hands
 @total_ordering
 class HandRanking(Enum):
@@ -41,6 +43,7 @@ class HandRanking(Enum):
 
     def __lt__(self, other):
         return self.value < other.value
+
 
 # A simple class representing a card
 @total_ordering
@@ -66,6 +69,7 @@ class Card:
     @property
     def plural(self) -> str:
         return RANK_INFO[self.rank].plural
+
 
 # A class for representing a 5-card hand, and allowing for the easy comparison
 # of hands

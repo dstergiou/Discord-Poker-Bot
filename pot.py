@@ -8,16 +8,11 @@ from poker import best_possible_hand, Card, Hand
 
 class Pot:
     def __init__(self, players: Set[Player]) -> None:
-        # The players that have contributed to this pot and can win it
-        self.players = players
-        # The bet that needs to be made to join this pot (in addition to the
-        # bets of the lower pots)
-        self.cur_bet = 0
-        # The amount of money accumulated in this pot
-        self.amount = 0
-        if len(players) > 0:
-            # The maximum bet that can be held by this pot before it
-            # needs a side pot
+        self.players = players          # The players that have contributed to this pot and can win it
+        self.cur_bet = 0                # The bet that needs to be made to join this pot (in addition to the  bets of the lower pots)
+        self.amount = 0                 # The amount of money accumulated in this pot
+        
+        if len(players) > 0:            # The maximum bet that can be held by this pot before it needs a side pot
             self.max_bet = min(player.max_bet for player in players)
         else:
             # It might be possible to raise the bet beyond what any players can
@@ -175,5 +170,4 @@ class PotManager:
         for player in self.pots[-1].players:
             player.placed_bet = False
             player.cur_bet = 0
-        self.pots[-1].max_bet = min(player.max_bet
-                                    for player in self.pots[-1].players)
+        self.pots[-1].max_bet = min(player.max_bet for player in self.pots[-1].players)
